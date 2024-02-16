@@ -1,5 +1,5 @@
+import ManagerSideGroup from "@/components/manager/ManagerSideGroup";
 import type { Metadata } from "next";
-import ManagerSideGroup from "../components/manager/ManagerSideGroup";
 
 export const metadata: Metadata = {
   title: "Manager",
