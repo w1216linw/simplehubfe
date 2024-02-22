@@ -10,3 +10,17 @@ export function getSession(): session | null {
 export function logout() {
   cookies().delete("session");
 }
+
+export function pickColor(index: number) {
+  const lightColors = [
+    "#FFD9E6",
+    "#BFEFFF",
+    "#C1FFC1",
+    "#FFFFCC",
+    "#FFE4C4",
+    "#FFDEAD",
+    "#E0FFFF",
+  ];
+
+  return lightColors[index % lightColors.length];
+}

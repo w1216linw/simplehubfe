@@ -5,6 +5,11 @@ export type session = {
   refresh_on: number;
 };
 
+export type tokens = {
+  access: string;
+  refresh: string;
+};
+
 export type response<T> = {
   count: number;
   next: string | null;
@@ -53,5 +58,10 @@ export type order = {
   status: boolean;
   date: number | Date;
   total: number;
-  orderitems: orderItem[];
+  order_items: orderItem[];
+};
+
+export type revenue = {
+  value: number;
+  label: string;
 };

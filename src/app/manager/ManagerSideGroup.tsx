@@ -11,7 +11,8 @@ const ManagerSideGroup = () => {
   const session = getSession();
 
   return (
-    <div className="h-full w-80 p-20 flex flex-col gap-5 border-r-2 border-gray-200">
+    <div className="h-screen min-w-max flex flex-col px-10 pb-5 gap-5 border-r-2 border-gray-200">
+      <Link href="/manager">Manager</Link>
       <ManagerSideGroupWrapper>
         <h1>Menu</h1>
         <ul>

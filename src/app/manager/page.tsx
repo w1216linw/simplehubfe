@@ -1,10 +1,12 @@
-import Dashboard from "@/components/manager/Dashboard";
+import Revenue from "@/app/manager/Revenue";
 
 const ManagerPage = () => {
   return (
-    <div className="h-screen flex-1">
-      <Dashboard />
-    </div>
+    <main className="overflow-y-scroll w-full flex flex-wrap p-20 bg-gray-100 gap-2">
+      <Revenue />
+      <Revenue />
+      <Revenue />
+    </main>
   );
 };
 

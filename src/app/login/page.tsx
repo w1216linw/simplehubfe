@@ -19,7 +19,7 @@ const SubmitBtn = () => {
 
 const Login = () => {
   return (
-    <div className="flex h-screen w-screen items-center justify-center">
+    <main className="flex h-screen w-screen items-center justify-center">
       <form
         className="flex flex-col w-[min(100%,16rem)] p-2 space-y-2"
         action={authenticate}
@@ -44,7 +44,7 @@ const Login = () => {
         />
         <SubmitBtn />
       </form>
-    </div>
+    </main>
   );
 };
 

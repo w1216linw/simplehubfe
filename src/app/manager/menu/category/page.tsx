@@ -1,30 +1,15 @@
-"use client";
-import Categories from "@/components/manager/menu/Categories";
-import FormBtn from "@/components/reuse/FormBtn";
-import { newCategory } from "@/lib/actions";
-import React, { useState } from "react";
+import Categories from "@/app/manager/menu/category/Categories";
+import NewCategory from "@/app/manager/menu/category/NewCategory";
 
 const CategoryPage = () => {
-  const [open, setOpen] = useState<Boolean>(false);
   return (
-    <div className="relative">
-      <div className="flex mb-2">
-        <button onClick={() => setOpen(true)}>Create new category</button>
-      </div>
-      <CategoriesMemoized />
-      <div className={`absolute ${!open && "hidden"}`}>
-        <button className="absolute" onClick={() => setOpen(false)}>
-          X
-        </button>
-        <form action={newCategory}>
-          <input type="text" />
-          <FormBtn click="Submit" loading="loading..." />
-        </form>
-      </div>
-    </div>
+    <main className="relative section-wrapper space-y-5">
+      <NewCategory />
+      <Categories />
+    </main>
   );
 };
 
-const CategoriesMemoized = React.memo(Categories);
+// const CategoriesMemoized = React.memo(Categories);
 
 export default CategoryPage;

@@ -1,4 +1,4 @@
-import ManagerSideGroup from "@/components/manager/ManagerSideGroup";
+import ManagerSideGroup from "@/app/manager/ManagerSideGroup";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -12,7 +12,7 @@ export default function ManagerLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="h-screen flex">
+    <div className="flex">
       <ManagerSideGroup />
       {children}
     </div>

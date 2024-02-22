@@ -22,6 +22,12 @@
   }
 }
 
+@layer components {
+  .section-wrapper {
+    @apply p-20;
+  }
+}
+
 .manager-side-group-wrapper > h1 {
   font-size: 1.5rem;
 }

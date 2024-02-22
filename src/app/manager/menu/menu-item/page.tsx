@@ -1,11 +1,12 @@
-"use client";
-import MenuItems from "@/components/manager/menu/MenuItems";
+import MenuItems from "@/app/manager/menu/menu-item/MenuItems";
+import NewMenuItemForm from "@/app/manager/menu/menu-item/NewMenuItemForm";
 
 const MenuItemPage = () => {
   return (
-    <div>
+    <main>
+      <NewMenuItemForm />
       <MenuItems />
-    </div>
+    </main>
   );
 };
 

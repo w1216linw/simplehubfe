@@ -1,4 +1,4 @@
-import type { menuItem } from "./MenuItems";
+import { menuItem } from "@/lib/types";
 
 const MenuItem = ({ menuItem }: { menuItem: menuItem }) => {
   return (

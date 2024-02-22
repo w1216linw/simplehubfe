@@ -1,5 +1,5 @@
 const User = async () => {
-  return <div>user</div>;
+  return <main>user</main>;
 };
 
 export default User;

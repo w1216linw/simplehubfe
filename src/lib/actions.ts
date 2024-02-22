@@ -3,7 +3,7 @@ import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
-import type { session } from "./types";
+import type { session, tokens } from "./types";
 import { getSession } from "./utils";
 
 export async function authenticate(formData: FormData) {
@@ -12,7 +12,7 @@ export async function authenticate(formData: FormData) {
       method: "POST",
       body: formData,
     });
-    const data: { access: string; refresh: string } = await res.json();
+    const data: tokens = await res.json();
     if (data) {
       const res2 = await fetch(process.env.NEXT_PUBLIC_URL + "/auth/users/me", {
         headers: {
@@ -74,38 +74,106 @@ export async function updateSession(request: NextRequest) {
   } else return NextResponse.next();
 }
 
-export async function newCategory(formData: FormData) {
-  const session = getSession();
-  if (!session) {
-    redirect("/login");
-  }
+export type FormState = {
+  input: string;
+  errors: {
+    text: string | undefined;
+  };
+};
 
-  const res = await fetch(process.env.NEXT_PUBLIC_URL + "/api/menu-items", {
-    method: "POST",
-    headers: {
-      authorization: `JWT ${session.access}`,
-    },
-    body: formData,
-  });
-  if (!res.ok) {
+export async function newCategory(
+  previousState: FormState,
+  formData: FormData
+) {
+  const title = formData.get("title") as string;
+  try {
+    const session = getSession();
+    if (!session) {
+      redirect("/login");
+    }
+
+    if (title.length < 3)
+      throw new Error("Category title must be at least 3 characters");
+
+    const res = await fetch(process.env.NEXT_PUBLIC_URL + "/api/categories", {
+      method: "POST",
+      headers: {
+        authorization: `JWT ${session.access}`,
+      },
+      body: formData,
+    });
+    if (!res.ok) {
+      const message = await res.json();
+      throw new Error(message.title);
+    }
+  } catch (error) {
+    let error_message = "Unable to add category";
+    if (error instanceof Error) error_message = error.message;
+
+    return {
+      input: title,
+      errors: {
+        text: error_message,
+      },
+    };
   }
   revalidatePath("/manager/menu/category");
+  return {
+    input: "2",
+    errors: {
+      text: undefined,
+    },
+  };
 }
 
-export async function newMenuItem(formData: FormData) {
+export type MenuFormState = {
+  title: string;
+  price: string;
+  errors: {
+    text: string | undefined;
+  };
+};
+
+export async function newMenuItem(state: MenuFormState, formData: FormData) {
   const session = getSession();
   if (!session) {
     redirect("/login");
   }
 
-  const res = await fetch(process.env.NEXT_PUBLIC_URL + "/api/menu-items", {
-    method: "POST",
-    headers: {
-      authorization: `JWT ${session.access}`,
-    },
-    body: formData,
-  });
-  if (!res.ok) {
+  try {
+    const price = formData.get("price");
+    if (isNaN(Number(price))) {
+      throw new Error("Invalid price");
+    }
+    const res = await fetch(process.env.NEXT_PUBLIC_URL + "/api/menu-items", {
+      method: "POST",
+      headers: {
+        authorization: `JWT ${session.access}`,
+      },
+      body: formData,
+    });
+    if (!res.ok) {
+      const message = await res.json();
+      throw new Error(message.title);
+    }
+  } catch (error) {
+    let error_message = "Unable to add new menu item";
+    if (error instanceof Error) error_message = error.message;
+    return {
+      title: state.title,
+      price: state.price,
+      errors: {
+        text: error_message,
+      },
+    };
   }
+
   revalidatePath("/manager/menu/menu-item");
+  return {
+    title: "",
+    price: "",
+    errors: {
+      text: undefined,
+    },
+  };
 }
