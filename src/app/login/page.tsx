@@ -1,29 +1,28 @@
 "use client";
-import { authenticate } from "@/lib/actions";
-import { useFormStatus } from "react-dom";
 
-const SubmitBtn = () => {
-  const { pending } = useFormStatus();
-  return (
-    <button
-      className={`${
-        pending && "bg-gray-400 bg-opacity-40"
-      } py-2 px-4 rounded-sm border border-white w-20 self-center mt-4"`}
-      type="submit"
-      aria-disabled={pending}
-    >
-      Login
-    </button>
-  );
-};
+import FormBtn from "@/components/FormBtn";
+import type { LoginStateProp } from "@/lib/actions";
+import { authenticate } from "@/lib/actions";
+import { useFormState } from "react-dom";
 
 const Login = () => {
+  const [state, formAction] = useFormState(authenticate, {
+    username: "",
+    password: "",
+    errors: { text: undefined },
+  } as LoginStateProp);
+
   return (
-    <main className="flex h-screen w-screen items-center justify-center">
+    <main className="flex flex-col h-screen w-screen items-center justify-center">
       <form
         className="flex flex-col w-[min(100%,16rem)] p-2 space-y-2"
-        action={authenticate}
+        action={formAction}
       >
+        {state?.errors.text && (
+          <div className="w-full text-center border-t-4 border-red-200 bg-gray-50 h-12 grid place-content-center">
+            {state.errors.text}
+          </div>
+        )}
         <label htmlFor="username" className="text-lg">
           Username
         </label>
@@ -42,7 +41,7 @@ const Login = () => {
           id="password"
           className="py-1 px-2  "
         />
-        <SubmitBtn />
+        <FormBtn click="Login" loading="loading..." />
       </form>
     </main>
   );

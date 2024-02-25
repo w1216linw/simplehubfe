@@ -1,45 +1,29 @@
 import { getSession, logout } from "@/lib/utils";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { ReactNode } from "react";
 
-const ManagerSideGroupWrapper = ({ children }: { children: ReactNode }) => {
-  return <div className="manager-side-group-wrapper">{children}</div>;
+const LinkWrapper = ({ href, text }: { href: string; text: string }) => {
+  return (
+    <Link
+      href={href}
+      className="text-lg font-semibold hover:bg-gray-200 pl-4 py-2 rounded-md transition-colors"
+    >
+      {text}
+    </Link>
+  );
 };
 
 const ManagerSideGroup = () => {
   const session = getSession();
 
   return (
-    <div className="h-screen min-w-max flex flex-col px-10 pb-5 gap-5 border-r-2 border-gray-200">
-      <Link href="/manager">Manager</Link>
-      <ManagerSideGroupWrapper>
-        <h1>Menu</h1>
-        <ul>
-          <li>
-            <Link href="/manager/menu/category">Category</Link>
-          </li>
-          <li>
-            <Link href="/manager/menu/menu-item">Menu Item</Link>
-          </li>
-        </ul>
-      </ManagerSideGroupWrapper>
-      <ManagerSideGroupWrapper>
-        <h1>Customers</h1>
-        <ul>
-          <li>Orders</li>
-          <li>Inquiry</li>
-        </ul>
-      </ManagerSideGroupWrapper>
-      <ManagerSideGroupWrapper>
-        <h1>Delivery Crews</h1>
-        <ul>
-          <li>Orders</li>
-          <li>Inquiry</li>
-        </ul>
-      </ManagerSideGroupWrapper>
+    <div className="h-screen w-[min(100%,20rem)] flex flex-col flex-grow-0 flex-shrink-0 gap-5 bg-neutral-50 px-4 py-8">
+      <LinkWrapper href="/manager" text="Home" />
+      <LinkWrapper href="/manager/menu" text="Menu" />
+      <LinkWrapper href="/manager/user" text="User" />
+      <LinkWrapper href="/manager/delivery-crew" text="Delivery Crew" />
       <div className="mt-auto flex gap-2">
-        <pre>{session?.username}</pre>
+        <pre className="font-semibold">{session?.username}</pre>
         <form
           action={async () => {
             "use server";

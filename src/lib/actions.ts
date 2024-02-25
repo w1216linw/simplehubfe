@@ -6,12 +6,29 @@ import { NextRequest, NextResponse } from "next/server";
 import type { session, tokens } from "./types";
 import { getSession } from "./utils";
 
-export async function authenticate(formData: FormData) {
+export type LoginStateProp = {
+  username: string;
+  password: string;
+  errors: {
+    text: string | undefined;
+  };
+} | null;
+
+export async function authenticate(
+  previousState: LoginStateProp,
+  formData: FormData
+) {
+  const username = formData.get("username") as string;
+  const password = formData.get("password") as string;
+
   try {
     const res = await fetch(process.env.NEXT_PUBLIC_URL + "/auth/jwt/create", {
       method: "POST",
       body: formData,
     });
+    if (!res.ok) {
+      throw new Error("Username or password is invalid");
+    }
     const data: tokens = await res.json();
     if (data) {
       const res2 = await fetch(process.env.NEXT_PUBLIC_URL + "/auth/users/me", {
@@ -28,11 +45,19 @@ export async function authenticate(formData: FormData) {
       cookies().set("session", session, {
         httpOnly: true,
       });
-      redirect("/");
     }
   } catch (error) {
-    throw error;
+    let error_message = "Server error";
+    if (error instanceof Error) error_message = error.message;
+    return {
+      username,
+      password,
+      errors: {
+        text: error_message,
+      },
+    };
   }
+  redirect("/");
 }
 
 export async function updateSession(request: NextRequest) {
@@ -117,7 +142,7 @@ export async function newCategory(
       },
     };
   }
-  revalidatePath("/manager/menu/category");
+  revalidatePath("/manager/menu");
   return {
     input: "2",
     errors: {
@@ -168,7 +193,7 @@ export async function newMenuItem(state: MenuFormState, formData: FormData) {
     };
   }
 
-  revalidatePath("/manager/menu/menu-item");
+  revalidatePath("/manager");
   return {
     title: "",
     price: "",

@@ -5,9 +5,12 @@ import { useFetch } from "@/lib/hooks";
 import { category } from "@/lib/types";
 import { useEffect, useRef } from "react";
 import { useFormState } from "react-dom";
+import Select from "./Select";
 
 const NewMenuItemForm = () => {
-  const [categories, error] = useFetch<category>("/api/categories");
+  const [categories, error, hasMore, moreItems] =
+    useFetch<category>("/api/categories");
+
   const [state, formAction] = useFormState(newMenuItem, {
     title: "",
     price: "",
@@ -22,6 +25,7 @@ const NewMenuItemForm = () => {
       priceRef.current.value = "";
     }
   }, [state]);
+
   return (
     <div>
       {error ? (
@@ -33,14 +37,7 @@ const NewMenuItemForm = () => {
             <input ref={titleRef} type="text" name="title" id="title" />
             <label htmlFor="price">Price</label>
             <input ref={priceRef} type="text" name="price" id="price" />
-            <select name="category" id="category">
-              {categories.length >= 1 &&
-                categories.map((elem) => (
-                  <option key={elem.id} value={elem.id}>
-                    {elem.title}
-                  </option>
-                ))}
-            </select>
+            <Select options={categories} more={moreItems} hasMore={hasMore} />
             <FormBtn click="Save" loading="Loading..." />
           </form>
           <p>{state && state.errors.text}</p>
