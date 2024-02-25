@@ -144,7 +144,7 @@ export async function newCategory(
   }
   revalidatePath("/manager/menu");
   return {
-    input: "2",
+    input: "",
     errors: {
       text: undefined,
     },

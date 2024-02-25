@@ -32,7 +32,7 @@ const Categories = () => {
   };
   useEffect(() => {
     getCategories(curPage);
-  }, [curPage, setCurPage]);
+  }, [curPage]);
   return (
     <div className="flex flex-col h-full">
       {error ? (

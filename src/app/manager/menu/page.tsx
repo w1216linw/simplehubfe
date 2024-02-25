@@ -1,7 +1,5 @@
 import Categories from "./category/Categories";
 import NewCategory from "./category/NewCategory";
-import MenuItems from "./menu-item/MenuItems";
-import NewMenuItemForm from "./menu-item/NewMenuItemForm";
 
 const MenuPage = () => {
   return (
@@ -11,11 +9,11 @@ const MenuPage = () => {
         <NewCategory />
         <Categories />
       </section>
-      <section className="bg-neutral-50 rounded-md px-8 py-4">
+      {/* <section className="bg-neutral-50 rounded-md px-8 py-4">
         <h1 className="font-semibold">Menu Items</h1>
         <NewMenuItemForm />
         <MenuItems />
-      </section>
+      </section> */}
     </section>
   );
 };
