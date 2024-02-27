@@ -6,7 +6,7 @@ const LinkWrapper = ({ href, text }: { href: string; text: string }) => {
   return (
     <Link
       href={href}
-      className="text-lg font-semibold hover:bg-gray-200 pl-4 py-2 rounded-md transition-colors"
+      className="text-xl font-semibold hover:bg-gray-200 pl-4 py-2 rounded-md transition-colors"
     >
       {text}
     </Link>
