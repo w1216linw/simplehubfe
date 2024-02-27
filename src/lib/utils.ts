@@ -24,3 +24,9 @@ export function pickColor(index: number) {
 
   return lightColors[index % lightColors.length];
 }
+
+export async function fetchTotalMenuItemsPages() {
+  return await fetch(
+    `${process.env.NEXT_PUBLIC_URL}/api/menu-items/counts`
+  ).then((res) => res.json());
+}

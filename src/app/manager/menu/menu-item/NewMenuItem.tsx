@@ -7,7 +7,7 @@ import { useEffect, useRef } from "react";
 import { useFormState } from "react-dom";
 import Select from "./Select";
 
-const NewMenuItemForm = () => {
+const NewMenuItem = () => {
   const [categories, error, hasMore, moreItems] =
     useFetch<category>("/api/categories");
 
@@ -47,4 +47,4 @@ const NewMenuItemForm = () => {
   );
 };
 
-export default NewMenuItemForm;
+export default NewMenuItem;
