@@ -193,10 +193,49 @@ export async function newMenuItem(state: MenuFormState, formData: FormData) {
     };
   }
 
-  revalidatePath("/manager");
+  revalidatePath("/manager/menu");
   return {
     title: "",
     price: "",
+    errors: {
+      text: undefined,
+    },
+  };
+}
+
+export async function deleteMenuItem(id: number) {
+  const session = getSession();
+  if (!session) {
+    redirect("/login");
+  }
+
+  try {
+    if (!process.env.NEXT_PUBLIC_URL) throw new Error("Server Error");
+    const res = await fetch(
+      process.env.NEXT_PUBLIC_URL + `/api/menu-items/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          authorization: `JWT ${session.access}`,
+        },
+      }
+    );
+    if (!res.ok) {
+      const message = await res.json();
+      throw new Error(message.title);
+    }
+  } catch (error) {
+    let error_message = "Unable to delete menu item";
+    if (error instanceof Error) error_message = error.message;
+    return {
+      errors: {
+        text: error_message,
+      },
+    };
+  }
+
+  revalidatePath("/manager/menu");
+  return {
     errors: {
       text: undefined,
     },

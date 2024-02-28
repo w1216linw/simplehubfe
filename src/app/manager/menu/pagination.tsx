@@ -1,6 +1,6 @@
 "use client";
-
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 
 const Pagination = ({
   counts,
@@ -26,23 +26,25 @@ const Pagination = ({
 
   console.log(totalPages, counts);
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center mt-auto h-max items-center">
       <button
         disabled={page === 1}
-        className="bg-gray-600 text-neutral-50 px-4 py-1 rounded-xl"
+        className="disabled:text-gray-400 flex items-center font-semibold"
         onClick={() => handleClick(page - 1)}
       >
+        <MdNavigateBefore />
         prev
       </button>
-      <div>
+      <div className="mx-4">
         {page} / {totalPages}
       </div>
       <button
         disabled={page === totalPages}
-        className="bg-gray-600 text-neutral-50 px-4 py-1 rounded-xl"
+        className="disabled:text-gray-400 flex items-center font-semibold "
         onClick={() => handleClick(page + 1)}
       >
         next
+        <MdNavigateNext />
       </button>
     </div>
   );

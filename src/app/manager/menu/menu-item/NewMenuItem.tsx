@@ -31,14 +31,41 @@ const NewMenuItem = () => {
       {error ? (
         <div>{error}</div>
       ) : (
-        <div>
-          <form action={formAction} className="flex">
-            <label htmlFor="title">Title</label>
-            <input ref={titleRef} type="text" name="title" id="title" />
-            <label htmlFor="price">Price</label>
-            <input ref={priceRef} type="text" name="price" id="price" />
-            <Select options={categories} more={moreItems} hasMore={hasMore} />
-            <FormBtn click="Save" loading="Loading..." />
+        <div className="h-max">
+          <form action={formAction} className="flex flex-col py-4 gap-3 w-96">
+            <div className="flex flex-col">
+              <label htmlFor="title">Title</label>
+              <input
+                ref={titleRef}
+                type="text"
+                name="title"
+                id="title"
+                className="bg-gray-100 rounded-lg"
+              />
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="price">Price</label>
+              <input
+                className="bg-gray-100 rounded-lg"
+                ref={priceRef}
+                type="text"
+                name="price"
+                id="price"
+              />
+            </div>
+            <div className="flex flex-col">
+              <label htmlFor="category">Category</label>
+              <Select options={categories} more={moreItems} hasMore={hasMore} />
+            </div>
+            <div className="space-x-4 flex items-center">
+              <label htmlFor="featured">Featured</label>
+              <input type="checkbox" name="featured" id="featured" />
+            </div>
+            <FormBtn
+              click="Save"
+              loading="Loading..."
+              style="bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors mt-8"
+            />
           </form>
           <p>{state && state.errors.text}</p>
         </div>

@@ -3,5 +3,5 @@ export default function MenuLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <div className="flex-col flex w-full">{children}</div>;
+  return <div className="w-full">{children}</div>;
 }

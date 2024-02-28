@@ -46,3 +46,9 @@
     )
     rgb(var(--background-start-rgb));
 }
+
+input,
+.input {
+  outline: none;
+  padding: 0.2rem 0.5rem;
+}

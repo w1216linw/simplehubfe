@@ -1,6 +1,6 @@
 "use client";
-
 import { useState } from "react";
+import { MdArrowDropDown } from "react-icons/md";
 
 type SelectProps<T> = {
   options: T[];
@@ -37,22 +37,24 @@ const Select = <T extends { title: string; id: string }>({
   };
 
   return (
-    <div className="w-max min-w-40 relative flex flex-col">
-      <div className="h-8 p-2 flex gap-2 bg-white">
+    <div className=" relative flex flex-col">
+      <div className="flex gap-2 bg-white">
         <input
           type="text"
           name="category"
           value={select?.id}
           className="hidden"
         />
-        <p>{select?.title}</p>
+        <p className="bg-gray-100 rounded-lg w-full input h-8">
+          {select?.title}
+        </p>
         <button className="ml-auto" onClick={handleSelectClick}>
-          x
+          <MdArrowDropDown />
         </button>
       </div>
       <div
-        className={`space-y-2 flex flex-col absolute top-9  max-h-80 overflow-y-scroll bg-white transition-all ${
-          open ? "h-max" : "h-0"
+        className={`space-y-2 flex flex-col absolute top-9 w-[95%] rounded-lg overflow-y-scroll bg-gray-100 transition-all ${
+          open ? "h-28" : "h-0"
         }`}
       >
         {options.map((option) => (

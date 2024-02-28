@@ -19,14 +19,14 @@ const Categories = async () => {
       ) : categories && categories.length >= 1 ? (
         <div className="flex ">
           {categories.map((elem, i) => (
-            <>
-              <SingleCategory data={elem} key={elem.title} />
+            <div key={elem.title} className="flex">
+              <SingleCategory data={elem} />
               {i < categories.length - 1 && (
-                <span key={i} className="mx-2 font-bold md:block hidden">
+                <span className="mx-2 font-bold md:block hidden">
                   {"\u00b7"}
                 </span>
               )}
-            </>
+            </div>
           ))}
         </div>
       ) : (

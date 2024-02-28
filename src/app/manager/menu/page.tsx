@@ -1,17 +1,19 @@
 import Modal from "@/components/Modal";
-import { fetchTotalMenuItemsPages } from "@/lib/utils";
+import { fetchTotalMenuItemsPages, urlBuilder } from "@/lib/utils";
 import Link from "next/link";
 import Categories from "./category/Categories";
 import NewCategory from "./category/NewCategory";
+import MenuItemDetail from "./menu-item/MenuItemDetail";
 import MenuItems from "./menu-item/MenuItems";
 import NewMenuItem from "./menu-item/NewMenuItem";
 import Pagination from "./pagination";
 
-const MenuPage = async ({
-  searchParams,
-}: {
-  searchParams?: { query?: string; page?: string };
-}) => {
+export type SearchParams = {
+  query?: string;
+  page?: string;
+};
+
+const MenuPage = async ({ searchParams }: { searchParams?: SearchParams }) => {
   const query = searchParams?.query || "";
   const currentPage = Number(searchParams?.page) || 1;
 
@@ -19,14 +21,15 @@ const MenuPage = async ({
     await fetchTotalMenuItemsPages();
 
   return (
-    <section className="px-4 space-y-4">
-      <div className="bg-neutral-50 p-4 rounded-lg">
+    <section className="p-4 space-y-4 h-full">
+      <div className="bg-neutral-50 p-4 rounded-lg min-h-[15%]">
         <div className="flex gap-5">
           <h1 className="font-semibold text-lg">Categories</h1>
           <Link
-            href={`/manager/menu?${"page=" + currentPage}${
-              query && "&query=" + query
-            }&new-category=y`}
+            href={`/manager/menu?${urlBuilder(
+              "new-category",
+              searchParams
+            ).toString()}`}
             className="bg-gray-600 text-neutral-50 px-4 py-1 rounded-xl"
           >
             +
@@ -37,13 +40,14 @@ const MenuPage = async ({
           <NewCategory />
         </Modal>
       </div>
-      <div className="bg-neutral-50 p-4 rounded-lg">
+      <div className="bg-neutral-50 p-4 rounded-lg min-h-[80%] flex-col flex">
         <div className="flex gap-5">
           <h1 className="font-semibold text-lg">Menu Items</h1>
           <Link
-            href={`/manager/menu?${"page=" + currentPage}${
-              query && "&query=" + query
-            }&new-item=y`}
+            href={`/manager/menu?${urlBuilder(
+              "new-item",
+              searchParams
+            ).toString()}`}
             className="bg-gray-600 text-neutral-50 px-4 py-1 rounded-xl"
           >
             +
@@ -53,6 +57,9 @@ const MenuPage = async ({
           <NewMenuItem />
         </Modal>
         <MenuItems query={query} currentPage={currentPage} />
+        <Modal title="edit-item">
+          <MenuItemDetail />
+        </Modal>
         <Pagination totalPages={totals.total_pages} counts={totals.counts} />
       </div>
     </section>

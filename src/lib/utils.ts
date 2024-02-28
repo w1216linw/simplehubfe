@@ -30,3 +30,14 @@ export async function fetchTotalMenuItemsPages() {
     `${process.env.NEXT_PUBLIC_URL}/api/menu-items/counts`
   ).then((res) => res.json());
 }
+
+export function urlBuilder(modalName: string, dicts?: Record<string, string>) {
+  const params = new URLSearchParams();
+  params.set(modalName, "y");
+  if (!dicts) return params;
+  Object.entries(dicts).forEach(([key, value]) => {
+    if (value) params.set(key, value);
+  });
+
+  return params;
+}

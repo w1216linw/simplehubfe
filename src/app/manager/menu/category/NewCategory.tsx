@@ -18,14 +18,22 @@ const NewCategory = () => {
 
   return (
     <div className="flex flex-col items-center">
-      <form className=" w-[min(40rem,100%)] flex " action={formAction}>
+      <form
+        className=" w-[min(40rem,100%)] flex flex-col py-4 gap-3"
+        action={formAction}
+      >
+        <label htmlFor="title">Title</label>
         <input
           ref={inputRef}
           type="text"
           name="title"
-          className="flex-1 px-2 py-1 outline-0"
+          className="bg-gray-100 rounded-lg"
         />
-        <FormBtn click="Submit" loading="Saving..." />
+        <FormBtn
+          click="Save"
+          loading="Loading..."
+          style="bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors mt-8"
+        />
       </form>
       {state.errors.text && (
         <p className="py-1 text-red-400">{state.errors.text}</p>

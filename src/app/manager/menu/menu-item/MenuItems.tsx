@@ -1,7 +1,7 @@
 import { menuItem } from "@/lib/types";
 import MenuItem from "./MenuItem";
 
-type MenuItemsProps = {
+export type MenuItemsProps = {
   query: string;
   currentPage: number;
 };
@@ -17,21 +17,27 @@ const MenuItems = async ({ query, currentPage }: MenuItemsProps) => {
   if (res) menuItems = res.results;
 
   return (
-    <div className="w-full h-96 pl-4 pt-4">
+    <div className="pl-4 pt-4">
       {error ? (
         <h3>{error}</h3>
       ) : menuItems.length > 1 ? (
         <table className="w-full">
-          <thead>
+          <thead className="font-semibold border-t border-b">
             <tr>
-              <td>Title</td>
-              <td>Category</td>
-              <td>Price</td>
+              <td className="w-1/4 py-2">Title</td>
+              <td className="w-1/4 py-2">Category</td>
+              <td className="w-1/4 py-2">Price</td>
+              <td className="w-1/4 py-2">Actions</td>
             </tr>
           </thead>
           <tbody>
             {menuItems.map((elem) => (
-              <MenuItem menuItem={elem} key={elem.id} />
+              <MenuItem
+                menuItem={elem}
+                key={elem.id}
+                searchParams={{ query, page: currentPage.toString() }}
+                baseUrl={"/manager/menu?"}
+              />
             ))}
           </tbody>
         </table>

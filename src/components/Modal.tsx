@@ -1,6 +1,7 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useRef } from "react";
+import { MdClose } from "react-icons/md";
 
 const Modal = ({
   title,
@@ -27,12 +28,14 @@ const Modal = ({
   }, [key]);
 
   return (
-    <dialog ref={dialogRef} className="p-2 rounded-md">
+    <dialog ref={dialogRef} className="p-4 rounded-md">
       <div className="flex justify-between">
-        <h1 className="capitalize">{formatTitle(title)}</h1>
-        <button onClick={() => router.back()}>X</button>
+        <h1 className="capitalize font-semibold">{formatTitle(title)}</h1>
+        <button onClick={() => router.back()}>
+          <MdClose />
+        </button>
       </div>
-      <div>{children}</div>
+      <div className="overflow-hidden">{children}</div>
     </dialog>
   );
 };
