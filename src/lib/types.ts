@@ -24,7 +24,7 @@ export type user = {
 
 export type category = {
   title: string;
-  id: string;
+  id: number;
 };
 
 export type menuItem = {

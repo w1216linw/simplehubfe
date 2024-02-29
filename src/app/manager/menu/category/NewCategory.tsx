@@ -11,9 +11,9 @@ const NewCategory = () => {
     errors: { text: undefined },
   });
 
-  const inputRef = useRef<HTMLInputElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
   useEffect(() => {
-    if (!state.errors.text && inputRef.current) inputRef.current.value = "";
+    if (!state.errors.text && formRef.current) formRef.current.reset();
   }, [state]);
 
   return (
@@ -21,14 +21,10 @@ const NewCategory = () => {
       <form
         className=" w-[min(40rem,100%)] flex flex-col py-4 gap-3"
         action={formAction}
+        ref={formRef}
       >
         <label htmlFor="title">Title</label>
-        <input
-          ref={inputRef}
-          type="text"
-          name="title"
-          className="bg-gray-100 rounded-lg"
-        />
+        <input type="text" name="title" className="bg-gray-100 rounded-lg" />
         <FormBtn
           click="Save"
           loading="Loading..."

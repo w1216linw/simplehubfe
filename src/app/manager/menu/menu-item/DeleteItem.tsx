@@ -6,7 +6,7 @@ const DeleteItem = ({ id }: { id: number }) => {
   return (
     <div>
       <form action={deleteMenuItem.bind(null, id)}>
-        <input type="text" value={id} name="id" className="hidden" />
+        <input type="text" value={id} name="id" className="hidden" readOnly />
         <button>
           <FaTrash className="text-lg" />
           <span className="sr-only">Delete</span>

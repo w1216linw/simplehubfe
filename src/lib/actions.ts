@@ -166,9 +166,17 @@ export async function newMenuItem(state: MenuFormState, formData: FormData) {
   }
 
   try {
+    const title = formData.get("title");
+    if (!title) {
+      throw new Error("Invalid title.");
+    }
     const price = formData.get("price");
-    if (isNaN(Number(price))) {
-      throw new Error("Invalid price");
+    if (!price || isNaN(Number(price))) {
+      throw new Error("Invalid price.");
+    }
+    const category = formData.get("category");
+    if (!category || isNaN(Number(category))) {
+      throw new Error("Invalid Category.");
     }
     const res = await fetch(process.env.NEXT_PUBLIC_URL + "/api/menu-items", {
       method: "POST",
@@ -236,6 +244,66 @@ export async function deleteMenuItem(id: number) {
 
   revalidatePath("/manager/menu");
   return {
+    errors: {
+      text: undefined,
+    },
+  };
+}
+
+export async function editMenuItem(state: MenuFormState, formData: FormData) {
+  const session = getSession();
+  if (!session) {
+    redirect("/login");
+  }
+
+  try {
+    const title = formData.get("title");
+    if (!title) {
+      throw new Error("Invalid title.");
+    }
+    const price = formData.get("price");
+    if (!price || isNaN(Number(price)) || Number(price) < 0) {
+      throw new Error("Invalid price.");
+    }
+    const category = formData.get("category");
+    if (!category || isNaN(Number(category))) {
+      throw new Error("Invalid Category.");
+    }
+    const id = formData.get("id");
+
+    if (isNaN(Number(price))) {
+      throw new Error("Invalid price");
+    }
+    const res = await fetch(
+      process.env.NEXT_PUBLIC_URL + "/api/menu-items/" + id,
+      {
+        method: "PATCH",
+        headers: {
+          authorization: `JWT ${session.access}`,
+        },
+        body: formData,
+      }
+    );
+    if (!res.ok) {
+      const message = await res.json();
+      throw new Error(message.title);
+    }
+  } catch (error) {
+    let error_message = "Unable to add new menu item";
+    if (error instanceof Error) error_message = error.message;
+    return {
+      title: state.title,
+      price: state.price,
+      errors: {
+        text: error_message,
+      },
+    };
+  }
+
+  revalidatePath("/manager/menu");
+  return {
+    title: "",
+    price: "",
     errors: {
       text: undefined,
     },
