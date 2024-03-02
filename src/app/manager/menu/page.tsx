@@ -3,7 +3,6 @@ import { fetchTotalMenuItemsPages, urlBuilder } from "@/lib/utils";
 import Link from "next/link";
 import Categories from "./category/Categories";
 import NewCategory from "./category/NewCategory";
-import MenuItemDetail from "./menu-item/MenuItemDetail";
 import MenuItems from "./menu-item/MenuItems";
 import NewMenuItem from "./menu-item/NewMenuItem";
 import Pagination from "./pagination";
@@ -57,9 +56,6 @@ const MenuPage = async ({ searchParams }: { searchParams?: SearchParams }) => {
           <NewMenuItem />
         </Modal>
         <MenuItems query={query} currentPage={currentPage} />
-        <Modal title="edit-item">
-          <MenuItemDetail />
-        </Modal>
         <Pagination totalPages={totals.total_pages} counts={totals.counts} />
       </div>
     </section>

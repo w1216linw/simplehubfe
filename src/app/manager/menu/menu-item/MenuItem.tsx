@@ -15,27 +15,31 @@ const MenuItem = ({
   baseUrl: string;
 }) => {
   const newSearchParams = { ...searchParams, id: menuItem.id.toString() };
-  const url = baseUrl + urlBuilder("edit-item", newSearchParams).toString();
+  const url =
+    baseUrl +
+    urlBuilder("edit-item-" + menuItem.id, newSearchParams).toString();
 
   return (
-    <tr className="">
-      <td className="py-2 relative">
-        {menuItem.featured && (
-          <div className="h-full absolute -left-4 top-0 flex items-center">
-            <MdOutlineStar />
+    <>
+      <tr className="">
+        <td className="py-2 relative">
+          {menuItem.featured && (
+            <div className="h-full absolute -left-4 top-0 flex items-center">
+              <MdOutlineStar />
+            </div>
+          )}
+          <p>{menuItem.title}</p>
+        </td>
+        <td className="py-2">{menuItem.category_name}</td>
+        <td className="py-2">${menuItem.price}</td>
+        <td className="py-2">
+          <div className="flex gap-4 items-center relative">
+            <EditItem url={url} />
+            <DeleteItem id={menuItem.id} />
           </div>
-        )}
-        <p>{menuItem.title}</p>
-      </td>
-      <td className="py-2">{menuItem.category_name}</td>
-      <td className="py-2">${menuItem.price}</td>
-      <td className="py-2">
-        <div className="flex gap-4 items-center relative">
-          <EditItem url={url} />
-          <DeleteItem id={menuItem.id} />
-        </div>
-      </td>
-    </tr>
+        </td>
+      </tr>
+    </>
   );
 };
 

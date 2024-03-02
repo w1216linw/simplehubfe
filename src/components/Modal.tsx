@@ -16,7 +16,7 @@ const Modal = ({
   const router = useRouter();
 
   const formatTitle = (title: string) => {
-    return title.replace(/-/g, " ");
+    return title.replace(/-|[0-9]/gm, " ");
   };
 
   useEffect(() => {
