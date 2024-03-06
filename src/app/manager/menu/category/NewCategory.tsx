@@ -2,7 +2,7 @@
 
 import FormBtn from "@/components/FormBtn";
 import { newCategory } from "@/lib/actions";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useFormState } from "react-dom";
 
 const NewCategory = () => {
@@ -10,16 +10,27 @@ const NewCategory = () => {
     input: "",
     errors: { text: undefined },
   });
-
+  const [showError, setShowError] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   useEffect(() => {
     if (!state.errors.text && formRef.current) formRef.current.reset();
   }, [state]);
 
+  useEffect(() => {
+    if (state.errors.text) setShowError(true);
+    let timer = setInterval(() => {
+      setShowError(false);
+    }, 2000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, [state.errors.text]);
+
   return (
     <div className="flex flex-col items-center">
       <form
-        className=" w-[min(40rem,100%)] flex flex-col py-4 gap-3"
+        className="flex flex-col py-4 gap-3 w-full"
         action={formAction}
         ref={formRef}
       >

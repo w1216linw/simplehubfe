@@ -13,7 +13,6 @@ const MenuItems = async ({ query, currentPage }: MenuItemsProps) => {
   let category: category[] = [];
   let error = undefined;
 
-  // handle errors
   const res = await fetch(
     process.env.NEXT_PUBLIC_URL + `/api/menu-items?page=${currentPage}`
   ).then((res) => res.json());

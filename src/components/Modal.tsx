@@ -28,7 +28,7 @@ const Modal = ({
   }, [key]);
 
   return (
-    <dialog ref={dialogRef} className="p-4 rounded-md">
+    <dialog ref={dialogRef} className="p-4 rounded-md  w-[min(25rem,100%)] ">
       <div className="flex justify-between">
         <h1 className="capitalize font-semibold">{formatTitle(title)}</h1>
         <button onClick={() => router.back()}>

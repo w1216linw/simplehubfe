@@ -5,13 +5,11 @@ const Categories = async () => {
   let categories: category[] = [];
   let error = undefined;
 
-  // handle errors
   const res = await fetch(process.env.NEXT_PUBLIC_URL + `/api/categories`).then(
     (res) => res.json()
   );
 
   if (res) categories = res.results;
-
   return (
     <div className="flex flex-col h-full pl-4 pt-4">
       {error ? (
