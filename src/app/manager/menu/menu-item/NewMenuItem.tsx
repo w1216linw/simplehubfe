@@ -54,7 +54,7 @@ const NewMenuItem = () => {
           <form
             ref={formRef}
             action={formAction}
-            className="flex flex-col py-4 gap-3 w-96"
+            className="flex flex-col py-4 gap-3"
           >
             <div className="flex flex-col">
               <label htmlFor="title">Title</label>
