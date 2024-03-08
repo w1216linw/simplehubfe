@@ -2,7 +2,6 @@
 import FormBtn from "@/components/FormBtn";
 import { editMenuItem } from "@/lib/actions";
 import { category, menuItem } from "@/lib/types";
-import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useFormState } from "react-dom";
 import Select from "./Select";
@@ -14,8 +13,6 @@ const MenuItemDetail = ({
   item: menuItem;
   categories: category[];
 }) => {
-  const searchParams = useSearchParams();
-  const id = searchParams.get("id");
   const formRef = useRef<HTMLFormElement>(null);
 
   const [select, setSelect] = useState<category>();
@@ -67,7 +64,7 @@ const MenuItemDetail = ({
         <input
           type="text"
           className="hidden"
-          value={id || item.id}
+          value={item.id}
           name="id"
           readOnly
         />

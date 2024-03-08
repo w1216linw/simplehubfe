@@ -99,7 +99,7 @@ export async function updateSession(request: NextRequest) {
   } else return NextResponse.next();
 }
 
-export type FormState = {
+export type CategoryFormState = {
   input: string;
   errors: {
     text: string | undefined;
@@ -107,7 +107,7 @@ export type FormState = {
 };
 
 export async function newCategory(
-  previousState: FormState,
+  previousState: CategoryFormState,
   formData: FormData
 ) {
   const title = formData.get("title") as string;
@@ -133,6 +133,55 @@ export async function newCategory(
     }
   } catch (error) {
     let error_message = "Unable to add category";
+    if (error instanceof Error) error_message = error.message;
+
+    return {
+      input: title,
+      errors: {
+        text: error_message,
+      },
+    };
+  }
+  revalidatePath("/manager/menu");
+  return {
+    input: "",
+    errors: {
+      text: undefined,
+    },
+  };
+}
+
+export async function editCategory(
+  state: CategoryFormState,
+  formData: FormData
+) {
+  const title = formData.get("title") as string;
+  const id = formData.get("id") as string;
+  try {
+    const session = getSession();
+    if (!session) {
+      redirect("/login");
+    }
+
+    if (title.length < 3)
+      throw new Error("Category title must be at least 3 characters");
+
+    const res = await fetch(
+      process.env.NEXT_PUBLIC_URL + `/api/categories/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          authorization: `JWT ${session.access}`,
+        },
+        body: formData,
+      }
+    );
+    if (!res.ok) {
+      const message = await res.json();
+      throw new Error(message.title);
+    }
+  } catch (error) {
+    let error_message = "Unable to edit category";
     if (error instanceof Error) error_message = error.message;
 
     return {
