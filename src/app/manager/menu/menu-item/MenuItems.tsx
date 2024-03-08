@@ -19,7 +19,7 @@ const MenuItems = async ({ query, currentPage }: MenuItemsProps) => {
   if (res) menuItems = res.results;
 
   const category_res = await fetch(
-    process.env.NEXT_PUBLIC_URL + `/api/categories?`
+    process.env.NEXT_PUBLIC_URL + `/api/categories`
   ).then((res) => res.json());
   if (category_res) category = category_res.results;
 
@@ -44,7 +44,6 @@ const MenuItems = async ({ query, currentPage }: MenuItemsProps) => {
                   menuItem={elem}
                   key={elem.id}
                   searchParams={{ query, page: currentPage.toString() }}
-                  baseUrl={"/manager/menu?"}
                 />
               ))}
             </tbody>

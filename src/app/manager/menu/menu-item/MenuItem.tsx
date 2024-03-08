@@ -8,16 +8,15 @@ import EditItem from "./EditItem";
 const MenuItem = ({
   menuItem,
   searchParams,
-  baseUrl,
 }: {
   menuItem: menuItem;
   searchParams: SearchParams;
-  baseUrl: string;
 }) => {
   const newSearchParams = { ...searchParams, id: menuItem.id.toString() };
-  const url =
-    baseUrl +
-    urlBuilder("edit-item-" + menuItem.id, newSearchParams).toString();
+  const url = urlBuilder(
+    "edit-item-" + menuItem.id,
+    newSearchParams
+  ).toString();
 
   return (
     <>

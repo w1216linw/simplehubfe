@@ -20,8 +20,8 @@ const ManagerSideGroup = () => {
     <div className="h-screen w-[min(100%,20rem)] flex flex-col flex-grow-0 flex-shrink-0 gap-5 bg-neutral-50 px-4 py-8 sticky top-0 left-0">
       <LinkWrapper href="/manager" text="Home" />
       <LinkWrapper href="/manager/menu" text="Menu" />
-      <LinkWrapper href="/manager/user" text="User" />
-      <LinkWrapper href="/manager/delivery-crew" text="Delivery Crew" />
+      {/* <LinkWrapper href="/manager/user" text="User" />
+      <LinkWrapper href="/manager/delivery-crew" text="Delivery Crew" /> */}
       <div className="mt-auto flex gap-2">
         <pre className="font-semibold">{session?.username}</pre>
         <form

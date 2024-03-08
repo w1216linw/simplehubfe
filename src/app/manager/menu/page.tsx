@@ -25,16 +25,13 @@ const MenuPage = async ({ searchParams }: { searchParams?: SearchParams }) => {
         <div className="flex gap-5">
           <h1 className="font-semibold text-lg">Categories</h1>
           <Link
-            href={`/manager/menu?${urlBuilder(
-              "new-category",
-              searchParams
-            ).toString()}`}
+            href={urlBuilder("new-category", searchParams)}
             className="bg-gray-600 text-neutral-50 px-4 py-1 rounded-xl"
           >
             +
           </Link>
         </div>
-        <Categories />
+        <Categories searchParams={searchParams} />
         <Modal title="new-category">
           <NewCategory />
         </Modal>
@@ -43,10 +40,7 @@ const MenuPage = async ({ searchParams }: { searchParams?: SearchParams }) => {
         <div className="flex gap-5">
           <h1 className="font-semibold text-lg">Menu Items</h1>
           <Link
-            href={`/manager/menu?${urlBuilder(
-              "new-item",
-              searchParams
-            ).toString()}`}
+            href={urlBuilder("new-item", searchParams)}
             className="bg-gray-600 text-neutral-50 px-4 py-1 rounded-xl"
           >
             +

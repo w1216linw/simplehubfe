@@ -31,13 +31,16 @@ export async function fetchTotalMenuItemsPages() {
   ).then((res) => res.json());
 }
 
-export function urlBuilder(modalName: string, dicts?: Record<string, string>) {
+export function urlBuilder(
+  modalName: string,
+  dicts?: Record<string, string>
+): string {
   const params = new URLSearchParams();
   params.set(modalName, "y");
-  if (!dicts) return params;
+  if (!dicts) return "?" + params.toString();
   Object.entries(dicts).forEach(([key, value]) => {
     if (value) params.set(key, value);
   });
 
-  return params;
+  return "?" + params.toString();
 }
