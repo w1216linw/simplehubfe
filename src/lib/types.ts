@@ -24,6 +24,7 @@ export type user = {
 
 export type category = {
   title: string;
+  slug: string;
   id: number;
 };
 
@@ -34,6 +35,7 @@ export type menuItem = {
   featured: boolean;
   category: number;
   category_name: string;
+  description: string;
 };
 
 export type cart = {

@@ -15,7 +15,7 @@ const MenuItemDetail = ({
 }) => {
   const formRef = useRef<HTMLFormElement>(null);
 
-  const [select, setSelect] = useState<category>();
+  const [select, setSelect] = useState<{ id: number; title: string }>();
   const [showError, setShowError] = useState(false);
 
   const [state, formAction] = useFormState(editMenuItem, {
@@ -59,7 +59,7 @@ const MenuItemDetail = ({
       <form
         ref={formRef}
         action={formAction}
-        className="flex flex-col py-4 gap-3 w-96"
+        className="flex flex-col py-4 gap-3"
       >
         <input
           type="text"
@@ -76,6 +76,15 @@ const MenuItemDetail = ({
             id="title"
             className="bg-gray-100 rounded-lg"
             defaultValue={item.title}
+          />
+        </div>
+        <div className="flex flex-col">
+          <label htmlFor="description">Description</label>
+          <textarea
+            name="description"
+            id="description"
+            className="bg-gray-100 rounded-lg"
+            defaultValue={item.description}
           />
         </div>
         <div className="flex flex-col">

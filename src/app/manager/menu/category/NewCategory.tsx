@@ -7,7 +7,10 @@ import { useFormState } from "react-dom";
 
 const NewCategory = () => {
   const [state, formAction] = useFormState(newCategory, {
-    input: "",
+    input: {
+      title: "",
+      slug: "",
+    },
     errors: { text: undefined },
   });
   const [showError, setShowError] = useState(false);
@@ -34,6 +37,8 @@ const NewCategory = () => {
         action={formAction}
         ref={formRef}
       >
+        <label htmlFor="slug">Slug</label>
+        <input type="text" name="slug" className="bg-gray-100 rounded-lg" />
         <label htmlFor="title">Title</label>
         <input type="text" name="title" className="bg-gray-100 rounded-lg" />
         <FormBtn

@@ -25,10 +25,16 @@ export function pickColor(index: number) {
   return lightColors[index % lightColors.length];
 }
 
-export async function fetchTotalMenuItemsPages() {
-  return await fetch(
-    `${process.env.NEXT_PUBLIC_URL}/api/menu-items/counts`
-  ).then((res) => res.json());
+export async function fetchTotalMenuItemsPages(slug?: string) {
+  if (slug && slug.toLowerCase() !== "all") {
+    return await fetch(
+      `${process.env.NEXT_PUBLIC_URL}/api/menu-items/counts?slug=${slug}`
+    ).then((res) => res.json());
+  } else {
+    return await fetch(
+      `${process.env.NEXT_PUBLIC_URL}/api/menu-items/counts`
+    ).then((res) => res.json());
+  }
 }
 
 export function urlBuilder(

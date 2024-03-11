@@ -24,7 +24,6 @@ const Pagination = ({
     replace(createPageUrl(page));
   };
 
-  console.log(totalPages, counts);
   return (
     <div className="flex justify-center mt-auto h-max items-center">
       <button

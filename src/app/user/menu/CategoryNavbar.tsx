@@ -12,14 +12,14 @@ const CategoryNavbar = async () => {
   };
 
   return (
-    <nav className="py-4 font-bold flex justify-center">
+    <nav className="py-6 font-bold flex justify-center">
       <ul className="flex divide-x divide-solid divide-gray-900">
         <Link className="px-5" href={`menu/?sort=all`}>
           All
         </Link>
         {categories.map((elem) => (
           <Link
-            href={`menu/?sort=${makeUrl(elem.title)}`}
+            href={`menu/?sort=${makeUrl(elem.slug)}`}
             key={elem.id}
             className="px-5"
           >

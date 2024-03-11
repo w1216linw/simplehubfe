@@ -25,6 +25,8 @@ export async function authenticate(
     const res = await fetch(process.env.NEXT_PUBLIC_URL + "/auth/jwt/create", {
       method: "POST",
       body: formData,
+    }).catch(() => {
+      throw new Error("Server Error");
     });
     if (!res.ok) {
       throw new Error("Username or password is invalid");
@@ -100,7 +102,10 @@ export async function updateSession(request: NextRequest) {
 }
 
 export type CategoryFormState = {
-  input: string;
+  input: {
+    title: string;
+    slug: string;
+  };
   errors: {
     text: string | undefined;
   };
@@ -111,11 +116,14 @@ export async function newCategory(
   formData: FormData
 ) {
   const title = formData.get("title") as string;
+  const slug = formData.get("slug") as string;
   try {
     const session = getSession();
     if (!session) {
       redirect("/login");
     }
+
+    if (!slug) throw new Error("Category slug is empty");
 
     if (title.length < 3)
       throw new Error("Category title must be at least 3 characters");
@@ -136,7 +144,10 @@ export async function newCategory(
     if (error instanceof Error) error_message = error.message;
 
     return {
-      input: title,
+      input: {
+        title: title,
+        slug: slug,
+      },
       errors: {
         text: error_message,
       },
@@ -144,7 +155,10 @@ export async function newCategory(
   }
   revalidatePath("/manager/menu");
   return {
-    input: "",
+    input: {
+      title: "",
+      slug: "",
+    },
     errors: {
       text: undefined,
     },
